@@ -51,15 +51,18 @@ def create_task():
     """Crea una nueva tarea."""
     data = request.get_json() or {}
     title = data.get('title')
+    urgency = data.get('urgency', False)
+    importance = data.get('importance', False)
     
     # La validación de negocio ocurre en el dominio a través del caso de uso.
     # Flask solo actúa como traductor de HTTP a Objetos/Llamadas de Aplicación.
-    task = create_task_uc.execute(title)
+    task = create_task_uc.execute(title, urgency, importance)
     
     return jsonify({
         "id": task.id,
         "title": task.title,
-        "state": task.state.value
+        "state": task.state.value,
+        "quadrant": task.quadrant.value
     }), 201
 
 @app.route('/api/tasks/<task_id>/move', methods=['PATCH'])

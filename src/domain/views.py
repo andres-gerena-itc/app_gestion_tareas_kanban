@@ -13,7 +13,8 @@ class KanbanView:
             {
                 "id": task.id,
                 "title": task.title,
-                "state": task.state.value
+                "state": task.state.value,
+                "quadrant": task.quadrant.value
             }
             for task in project.tasks
         ]

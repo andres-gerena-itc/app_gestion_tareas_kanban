@@ -9,14 +9,14 @@ class CreateTaskUseCase:
     def __init__(self, repo: WorkspaceRepository):
         self.repo = repo
 
-    def execute(self, title: str) -> Task:
+    def execute(self, title: str, urgency: bool = False, importance: bool = False) -> Task:
         workspace = self.repo.get_workspace()
         
         if not workspace.projects:
             raise ValueError("No hay proyectos en el Workspace.")
         
         project = workspace.projects[0]
-        task = Task(title=title)
+        task = Task(title=title, urgency=urgency, importance=importance)
         project.add_task(task)
         
         self.repo.save_workspace(workspace)

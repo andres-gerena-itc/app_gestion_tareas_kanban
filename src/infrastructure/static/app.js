@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Referencias a elementos del DOM
     const titleInput = document.getElementById('new-task-title');
+    const urgencyCheck = document.getElementById('check-urgency');
+    const importanceCheck = document.getElementById('check-importance');
     const addBtn = document.getElementById('add-task-btn');
     
     const lists = {
@@ -39,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. CREAR TAREA (POST /api/tasks)
     async function createTask() {
         const title = titleInput.value.trim();
+        const urgency = urgencyCheck.checked;
+        const importance = importanceCheck.checked;
+        
         if (!title) {
             showToast("El título de la tarea no puede estar vacío.");
             return;
@@ -48,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch('/api/tasks', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title })
+                body: JSON.stringify({ title, urgency, importance })
             });
 
             // Si falla, extraer el JSON de error del backend (Ej: Límite WIP, Título Inválido)
@@ -58,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             titleInput.value = '';
+            urgencyCheck.checked = false;
+            importanceCheck.checked = false;
             fetchBoard(); // Recargar todo el tablero usando solo los datos del backend
         } catch (error) {
             showToast(error.message);
@@ -107,7 +114,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 actionsHtml = `<button class="move-btn" onclick="moveTask('${task.id}', 'DONE')">Completar</button>`;
             }
 
+            // Construir etiqueta de Cuadrante si existe
+            let quadrantHtml = '';
+            if (task.quadrant) {
+                const quadMap = {
+                    "HACER": "quad-hacer",
+                    "PLANIFICAR": "quad-planificar",
+                    "DELEGAR": "quad-delegar",
+                    "ELIMINAR": "quad-eliminar"
+                };
+                const iconMap = {
+                    "HACER": "🔥",
+                    "PLANIFICAR": "📅",
+                    "DELEGAR": "👤",
+                    "ELIMINAR": "🗑️"
+                };
+                quadrantHtml = `<div class="task-quadrant ${quadMap[task.quadrant]}">${iconMap[task.quadrant]} ${task.quadrant}</div>`;
+            }
+
             card.innerHTML = `
+                ${quadrantHtml}
                 <div class="task-title">${escapeHtml(task.title)}</div>
                 <div class="task-actions">${actionsHtml}</div>
             `;

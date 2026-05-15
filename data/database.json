@@ -17,6 +17,26 @@
                     "urgency": false,
                     "importance": false,
                     "property_values": {}
+                },
+                {
+                    "id": "b9802b1f-735e-45e6-9252-8712cc0efd05",
+                    "title": "enviar tarea",
+                    "state": "DONE",
+                    "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
+                    "parent_task_id": null,
+                    "urgency": true,
+                    "importance": false,
+                    "property_values": {}
+                },
+                {
+                    "id": "f2c4b17e-5db2-4c5c-9b98-8d4ba56aa26f",
+                    "title": "ddddd",
+                    "state": "TODO",
+                    "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
+                    "parent_task_id": null,
+                    "urgency": false,
+                    "importance": true,
+                    "property_values": {}
                 }
             ]
         }

@@ -38,4 +38,9 @@
   - 13.1 Tratar el tablero Kanban como una `View` calculada (solo lectura), descontinuando el agregado monolítico actual (INV-08).
   - 13.2 Actualizar el adaptador JSON para soportar persistencia desde la raíz del `Workspace`.
 
-*(El detalle de cada paso será completado durante la fase de ejecución)*
+## FASE 3: Reflejo Multidimensional en la UI
+
+- [x] **Paso 14: Integración UI de Eisenhower**
+  - 14.1 Añadir controles de Urgencia e Importancia en el formulario de creación.
+  - 14.2 Enviar el payload completo al backend.
+  - 14.3 Renderizar el cuadrante devuelto por la API en las tarjetas de tareas con estilos condicionales.
