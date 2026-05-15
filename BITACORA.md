@@ -4,5 +4,5 @@ Este archivo documenta la evolución del proyecto generada con IA. Cada vez que 
 
 | Fecha | Paso | Descripción del Cambio | Archivos Modificados | Resultado / Pruebas | Hash del Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| YYYY-MM-DD | Inicial | Creación del paquete de contexto Markdown. | `context/*`, `specs/*` | Aprobado | (Pendiente) |
+| 2026-05-15 | Inicial | Creación del paquete de contexto Markdown. | `context/*`, `specs/*`, `plan/*`, `prompts/*`| Aprobado | d00267e |
 | | | | | | |

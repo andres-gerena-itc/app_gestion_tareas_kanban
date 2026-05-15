@@ -3,8 +3,13 @@
 > **Nota para la IA:** Este archivo documenta el plan paso a paso. Cada paso debe ser atómico, reversible (un solo `git revert`) y enfocado en una sola capa a la vez. No se debe avanzar al siguiente paso sin la aprobación explícita del usuario.
 
 ## Estado de Ejecución
-- [ ] **Paso 1:** Configuración inicial del proyecto y estructura de carpetas.
+- [x] **Paso 1:** Configuración inicial del proyecto y estructura de carpetas.
+  - 1.1 Crear estructura de directorios: `src/domain/`, `src/application/`, `src/infrastructure/`, `data/`, y `tests/`.
+  - 1.2 Crear archivos `__init__.py` para definir los paquetes de Python.
 - [ ] **Paso 2:** Implementación del Dominio (Entidades `Task`, `Board` y Límite WIP).
+  - 2.1 Definir excepciones de dominio (`InvalidTitleError`, `TaskNotFoundError`, `InvalidStateTransitionError`, `WipLimitExceededError`) en `src/domain/exceptions.py`.
+  - 2.2 Crear entidad `Task` (`id` UUID, `title` string, `state` Enum/string) en `src/domain/task.py` aplicando la regla de negocio de Título Obligatorio y Estado Inicial `TODO`.
+  - 2.3 Crear agregado `Board` en `src/domain/board.py` que valide el límite de WIP (máx 3 en `DOING`) y controle las transiciones válidas (`TODO` -> `DOING` -> `DONE`).
 - [ ] **Paso 3:** Pruebas unitarias del Dominio (Validación de WIP).
 - [ ] **Paso 4:** Implementación de Casos de Uso (Capa de Aplicación).
 - [ ] **Paso 5:** Implementación del Repositorio JSON (Infraestructura).
