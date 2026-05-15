@@ -16,7 +16,7 @@
   - 4.2 Implementar `CreateTaskUseCase` para orquestar la validación y el guardado.
   - 4.3 Implementar `MoveTaskUseCase` para orquestar el movimiento y aplicar el límite WIP mediante el dominio.
   - 4.4 Implementar `GetBoardUseCase` para retornar el estado general sin alterar datos.
-- [ ] **Paso 5:** Implementación del Repositorio JSON (Infraestructura).
+- [x] **Paso 5:** Implementación del Repositorio JSON (Infraestructura).
 - [ ] **Paso 6:** Implementación del servidor Flask y endpoints HTTP (Infraestructura).
 - [ ] **Paso 7:** Construcción del Frontend Vanilla JS.
 - [ ] **Paso 8:** Pruebas de integración manuales y ajustes finales.
