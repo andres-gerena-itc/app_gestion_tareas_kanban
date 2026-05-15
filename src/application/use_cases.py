@@ -1,50 +1,60 @@
+from typing import Dict, Any, List
 from src.domain.task import Task, TaskState
-from src.domain.board import Board
-from src.application.repository import BoardRepository
+from src.domain.project import Project
+from src.domain.workspace import Workspace
+from src.domain.views import KanbanView
+from .repository import WorkspaceRepository
 
 class CreateTaskUseCase:
-    """Orquesta la creación de una tarea y su adición al tablero."""
-    
-    def __init__(self, repository: BoardRepository):
-        self.repository = repository
+    def __init__(self, repo: WorkspaceRepository):
+        self.repo = repo
 
     def execute(self, title: str) -> Task:
-        # 1. Recuperar el estado actual
-        board = self.repository.get_board()
+        workspace = self.repo.get_workspace()
         
-        # 2. Instanciar la entidad del dominio (aplica regla: Título Obligatorio y estado TODO)
+        if not workspace.projects:
+            raise ValueError("No hay proyectos en el Workspace.")
+        
+        project = workspace.projects[0]
         task = Task(title=title)
+        project.add_task(task)
         
-        # 3. Delegar lógica de negocio al agregado
-        board.add_task(task)
-        
-        # 4. Persistir cambios
-        self.repository.save_board(board)
-        
+        self.repo.save_workspace(workspace)
         return task
 
 class MoveTaskUseCase:
-    """Orquesta el movimiento de una tarea en el tablero."""
-    
-    def __init__(self, repository: BoardRepository):
-        self.repository = repository
+    def __init__(self, repo: WorkspaceRepository):
+        self.repo = repo
 
-    def execute(self, task_id: str, target_state: TaskState) -> None:
-        # 1. Recuperar el estado actual
-        board = self.repository.get_board()
+    def execute(self, task_id: str, target_state: str) -> None:
+        workspace = self.repo.get_workspace()
         
-        # 2. Delegar lógica de negocio (aplica reglas: Límite WIP y Transiciones válidas)
-        board.move_task(task_id, target_state)
+        if not workspace.projects:
+            raise ValueError("No hay proyectos en el Workspace.")
+            
+        project = workspace.projects[0]
         
-        # 3. Persistir cambios
-        self.repository.save_board(board)
+        try:
+            state_enum = TaskState(target_state)
+        except ValueError:
+            raise ValueError(f"Estado '{target_state}' no es válido.")
 
-class GetBoardUseCase:
-    """Obtiene el estado actual del tablero sin realizar alteraciones."""
-    
-    def __init__(self, repository: BoardRepository):
-        self.repository = repository
+        project.move_task(task_id, state_enum)
+        self.repo.save_workspace(workspace)
 
-    def execute(self) -> Board:
-        # 1. Simplemente recupera y retorna la información
-        return self.repository.get_board()
+class GetKanbanViewUseCase:
+    """
+    Reemplaza a GetBoardUseCase. Retorna una Proyección (Vista) 
+    sin acoplarse al agregado monolítico.
+    """
+    def __init__(self, repo: WorkspaceRepository):
+        self.repo = repo
+
+    def execute(self) -> Dict[str, Any]:
+        workspace = self.repo.get_workspace()
+        
+        if not workspace.projects:
+            return {"TODO": [], "DOING": [], "DONE": []}
+            
+        project = workspace.projects[0]
+        return KanbanView.generate(project)

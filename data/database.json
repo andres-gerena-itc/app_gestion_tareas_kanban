@@ -1,34 +1,24 @@
 {
-    "tasks": [
+    "id": "c3e2f957-cb89-49dc-b522-050cb9f4086b",
+    "name": "Mi Espacio Personal",
+    "property_schemas": [],
+    "projects": [
         {
-            "id": "397bd5a5-a18b-4921-a1fd-07007260ff79",
-            "title": "Configurar base de datos",
-            "state": "DONE"
-        },
-        {
-            "id": "0ced55f6-5e5c-4ea7-abd1-0b9ffd3efcbf",
-            "title": "Tarea A",
-            "state": "DOING"
-        },
-        {
-            "id": "c506609f-97e8-4fe0-ae1f-e4f8fbb67b93",
-            "title": "Tarea B",
-            "state": "DOING"
-        },
-        {
-            "id": "bbe0b139-c733-4c50-a22d-bfa4346690af",
-            "title": "Tarea C",
-            "state": "DOING"
-        },
-        {
-            "id": "d98e5318-4217-4e06-9c11-05dfdbecfe7d",
-            "title": "Tarea D",
-            "state": "TODO"
-        },
-        {
-            "id": "07bf2433-81e4-4ee7-9a0a-d45546bdfea2",
-            "title": "Tarea E",
-            "state": "TODO"
+            "id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
+            "workspace_id": "c3e2f957-cb89-49dc-b522-050cb9f4086b",
+            "name": "Mi Primer Tablero",
+            "tasks": [
+                {
+                    "id": "020d7f63-85d8-40ac-8148-aad4371e2d37",
+                    "title": "Tarea A",
+                    "state": "DONE",
+                    "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
+                    "parent_task_id": null,
+                    "urgency": false,
+                    "importance": false,
+                    "property_values": {}
+                }
+            ]
         }
     ]
 }

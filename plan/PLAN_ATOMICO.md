@@ -34,7 +34,7 @@
 - [x] **Paso 12: Propiedades Dinámicas**
   - 12.1 Definir `PropertySchema` en `Workspace` (6 tipos nativos).
   - 12.2 Validar que los `PropertyValues` de una `Task` coincidan estrictamente con el esquema (INV-06).
-- [ ] **Paso 13: Proyecciones e Infraestructura**
+- [x] **Paso 13: Proyecciones e Infraestructura**
   - 13.1 Tratar el tablero Kanban como una `View` calculada (solo lectura), descontinuando el agregado monolítico actual (INV-08).
   - 13.2 Actualizar el adaptador JSON para soportar persistencia desde la raíz del `Workspace`.
 

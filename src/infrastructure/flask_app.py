@@ -5,10 +5,10 @@ from src.domain.task import TaskState
 from src.domain.exceptions import DomainError
 
 # Aplicación (Casos de Uso)
-from src.application.use_cases import CreateTaskUseCase, MoveTaskUseCase, GetBoardUseCase
+from src.application.use_cases import CreateTaskUseCase, MoveTaskUseCase, GetKanbanViewUseCase
 
 # Infraestructura (Adaptador)
-from src.infrastructure.json_repository import JSONBoardRepository
+from src.infrastructure.json_repository import JSONWorkspaceRepository
 
 # Añadimos parámetros para servir archivos estáticos desde el directorio 'static'
 app = Flask(__name__, static_folder='static', static_url_path='')
@@ -16,10 +16,10 @@ app = Flask(__name__, static_folder='static', static_url_path='')
 # ==========================================
 # Configuración de Inyección de Dependencias
 # ==========================================
-repository = JSONBoardRepository()
+repository = JSONWorkspaceRepository(file_path="data/database.json")
 create_task_uc = CreateTaskUseCase(repository)
 move_task_uc = MoveTaskUseCase(repository)
-get_board_uc = GetBoardUseCase(repository)
+get_kanban_view_uc = GetKanbanViewUseCase(repository)
 
 # ==========================================
 # Manejo de Errores de Dominio
@@ -44,16 +44,7 @@ def serve_index():
 @app.route('/api/board', methods=['GET'])
 def get_board():
     """Retorna el estado actual del tablero y sus tareas."""
-    board = get_board_uc.execute()
-    tasks_data = [
-        {
-            "id": task.id,
-            "title": task.title,
-            "state": task.state.value
-        }
-        for task in board.tasks
-    ]
-    return jsonify({"tasks": tasks_data}), 200
+    return jsonify(get_kanban_view_uc.execute()), 200
 
 @app.route('/api/tasks', methods=['POST'])
 def create_task():
@@ -77,15 +68,12 @@ def move_task(task_id):
     data = request.get_json() or {}
     target_state_str = data.get('target_state', '')
     
+    # Transforma la excepción si se da el caso
     try:
-        # Transformar string de request a Enum de Dominio
-        target_state = TaskState(target_state_str)
-    except ValueError:
-        return jsonify({"error": f"Estado '{target_state_str}' no es válido."}), 400
+        move_task_uc.execute(task_id, target_state_str) # El use case ya espera el string y lo valida
+    except Exception as e:
+        raise
         
-    # Las reglas de negocio (Límite WIP, transiciones) se ejecutan en el dominio.
-    move_task_uc.execute(task_id, target_state)
-    
     return jsonify({"message": "Tarea movida exitosamente"}), 200
 
 if __name__ == '__main__':

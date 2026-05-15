@@ -1,19 +1,17 @@
-from abc import ABC, abstractmethod
-from src.domain.board import Board
+import abc
+from src.domain.workspace import Workspace
 
-class BoardRepository(ABC):
+class WorkspaceRepository(abc.ABC):
     """
-    Puerto de persistencia (interfaz) para el manejo de tableros.
-    Permite a la capa de aplicación interactuar con el almacenamiento
-    sin conocer detalles de infraestructura (ej. JSON, base de datos).
+    Puerto (interfaz) para el repositorio de persistencia.
+    Ahora operamos sobre el Aggregate Root principal: Workspace.
     """
-
-    @abstractmethod
-    def get_board(self) -> Board:
-        """Recupera el tablero actual con todas sus tareas."""
+    @abc.abstractmethod
+    def get_workspace(self) -> Workspace:
+        """Recupera el Workspace actual (por ahora asumimos uno solo por defecto)."""
         pass
 
-    @abstractmethod
-    def save_board(self, board: Board) -> None:
-        """Persiste el estado actual del tablero y sus tareas."""
+    @abc.abstractmethod
+    def save_workspace(self, workspace: Workspace) -> None:
+        """Persiste el estado completo del Workspace."""
         pass
