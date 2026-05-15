@@ -5,5 +5,6 @@ Este archivo documenta la evolución del proyecto generada con IA. Cada vez que 
 | Fecha | Paso | Descripción del Cambio | Archivos Modificados | Resultado / Pruebas | Hash del Commit |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | 2026-05-15 | Inicial | Creación del paquete de contexto Markdown. | `context/*`, `specs/*`, `plan/*`, `prompts/*`| Aprobado | d00267e |
-| 2026-05-15 | 1 | Estructura inicial carpetas | | Aprobado | 6830b22 |
+| 2026-05-15 | Paso 1 | Estructura inicial carpetas | | Aprobado | 6830b22 |
+| 2026-05-15 | Paso 2 | Implementación del Dominio (Task, Board, Límite WIP). | `src/domain/exceptions.py`, `src/domain/task.py`, `src/domain/board.py` | Aprobado | `742d8bd` |
 | | | | | | |

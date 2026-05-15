@@ -10,8 +10,12 @@
   - 2.1 Definir excepciones de dominio (`InvalidTitleError`, `TaskNotFoundError`, `InvalidStateTransitionError`, `WipLimitExceededError`) en `src/domain/exceptions.py`.
   - 2.2 Crear entidad `Task` (`id` UUID, `title` string, `state` Enum/string) en `src/domain/task.py` aplicando la regla de negocio de Título Obligatorio y Estado Inicial `TODO`.
   - 2.3 Crear agregado `Board` en `src/domain/board.py` que valide el límite de WIP (máx 3 en `DOING`) y controle las transiciones válidas (`TODO` -> `DOING` -> `DONE`).
-- [ ] **Paso 3:** Pruebas unitarias del Dominio (Validación de WIP).
+- [x] **Paso 3:** Pruebas unitarias del Dominio (Validación de WIP).
 - [ ] **Paso 4:** Implementación de Casos de Uso (Capa de Aplicación).
+  - 4.1 Definir el puerto de persistencia (interfaz `RepositoryInterface`) en `src/application/repository.py`.
+  - 4.2 Implementar `CreateTaskUseCase` para orquestar la validación y el guardado.
+  - 4.3 Implementar `MoveTaskUseCase` para orquestar el movimiento y aplicar el límite WIP mediante el dominio.
+  - 4.4 Implementar `GetBoardUseCase` para retornar el estado general sin alterar datos.
 - [ ] **Paso 5:** Implementación del Repositorio JSON (Infraestructura).
 - [ ] **Paso 6:** Implementación del servidor Flask y endpoints HTTP (Infraestructura).
 - [ ] **Paso 7:** Construcción del Frontend Vanilla JS.
