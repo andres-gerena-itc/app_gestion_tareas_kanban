@@ -10,7 +10,8 @@ from src.application.use_cases import CreateTaskUseCase, MoveTaskUseCase, GetBoa
 # Infraestructura (Adaptador)
 from src.infrastructure.json_repository import JSONBoardRepository
 
-app = Flask(__name__)
+# Añadimos parámetros para servir archivos estáticos desde el directorio 'static'
+app = Flask(__name__, static_folder='static', static_url_path='')
 
 # ==========================================
 # Configuración de Inyección de Dependencias
@@ -34,6 +35,11 @@ def handle_domain_error(error):
 # ==========================================
 # Endpoints HTTP
 # ==========================================
+
+@app.route('/')
+def serve_index():
+    """Sirve el frontend Vanilla JS."""
+    return app.send_static_file('index.html')
 
 @app.route('/api/board', methods=['GET'])
 def get_board():

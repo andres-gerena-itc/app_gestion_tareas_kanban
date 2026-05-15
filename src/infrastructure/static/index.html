@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero Kanban</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Tablero Kanban</h1>
+            <div class="task-input-container">
+                <input type="text" id="new-task-title" placeholder="¿Qué necesitas hacer?">
+                <button id="add-task-btn">Agregar Tarea</button>
+            </div>
+        </header>
+
+        <main class="board">
+            <div class="column" id="col-TODO">
+                <div class="column-header">
+                    <h2>TODO</h2>
+                    <span class="count" id="count-TODO">0</span>
+                </div>
+                <div class="task-list" id="list-TODO" data-state="TODO">
+                    <!-- Tasks injected here -->
+                </div>
+            </div>
+
+            <div class="column" id="col-DOING">
+                <div class="column-header">
+                    <h2>DOING</h2>
+                    <span class="count" id="count-DOING">0</span>
+                </div>
+                <div class="task-list" id="list-DOING" data-state="DOING">
+                    <!-- Tasks injected here -->
+                </div>
+            </div>
+
+            <div class="column" id="col-DONE">
+                <div class="column-header">
+                    <h2>DONE</h2>
+                    <span class="count" id="count-DONE">0</span>
+                </div>
+                <div class="task-list" id="list-DONE" data-state="DONE">
+                    <!-- Tasks injected here -->
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Contenedor para mensajes de error del backend (toast) -->
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

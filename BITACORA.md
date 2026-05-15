@@ -10,4 +10,6 @@ Este archivo documenta la evolución del proyecto generada con IA. Cada vez que 
 | 2026-05-15 | Paso 3 | Pruebas Unitarias del Dominio con pytest. | `tests/test_domain.py` | Aprobado (7/7 tests) | 3d77350 |
 | 2026-05-15 | Paso 4 | Casos de Uso y Puerto del Repositorio (Inversión de Control). | `src/application/*` | Aprobado | bc013e1 |
 | 2026-05-15 | Paso 5 | Adaptador de persistencia JSON. | `src/infrastructure/json_repository.py` | Aprobado | 3606f9b |
+| 2026-05-15 | Paso 6 | Servidor Flask, inyección de dependencias y endpoints API. | `src/infrastructure/flask_app.py` | Aprobado | af15194
+ |
 | | | | | | |
