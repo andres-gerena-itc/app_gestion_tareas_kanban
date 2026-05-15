@@ -17,3 +17,11 @@ class InvalidStateTransitionError(DomainError):
 class WipLimitExceededError(DomainError):
     def __init__(self):
         super().__init__("Límite WIP excedido. No se pueden tener más de 3 tareas en estado DOING.")
+
+class HierarchyCycleError(DomainError):
+    def __init__(self):
+        super().__init__("Ciclo de jerarquía detectado. Una tarea no puede ser hija de sí misma ni de sus propios descendientes.")
+
+class MaxDepthExceededError(DomainError):
+    def __init__(self):
+        super().__init__("Profundidad máxima excedida. El árbol de tareas no puede superar los 3 niveles.")

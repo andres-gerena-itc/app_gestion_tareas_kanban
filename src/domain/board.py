@@ -9,6 +9,11 @@ from .exceptions import (
 WIP_LIMIT = 3
 
 class Board:
+    """
+    @deprecated: Este agregado monolítico será descontinuado y absorbido
+    por la lógica de vistas (Views) a partir del Project en los Pasos 13 y 14.
+    Se mantiene temporalmente para retrocompatibilidad con el frontend.
+    """
     def __init__(self, tasks: Optional[List[Task]] = None):
         self.tasks: List[Task] = tasks if tasks is not None else []
 

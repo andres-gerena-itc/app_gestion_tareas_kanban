@@ -19,16 +19,16 @@
 - [x] **Paso 5:** Implementación del Repositorio JSON (Infraestructura).
 - [x] **Paso 6:** Implementación del servidor Flask y endpoints HTTP (Infraestructura).
 - [x] **Paso 7:** Construcción del Frontend Vanilla JS.
-- [ ] **Paso 8:** Pruebas de integración manuales y ajustes finales.
+- [x] **Paso 8:** Pruebas de integración manuales y ajustes finales Fase 1.
 
 ## FASE 2: Expansión Multidimensional (Notion-like)
 
-- [ ] **Paso 9: Rediseño del Dominio Central**
+- [x] **Paso 9: Rediseño del Dominio Central**
   - 9.1 Refactorizar agregados: Crear `Workspace` y `Project` (INV-05).
-- [ ] **Paso 10: Clasificación Eisenhower**
+- [x] **Paso 10: Clasificación Eisenhower**
   - 10.1 Añadir atributos `urgency` e `importance` a `Task`.
   - 10.2 Implementar derivación de `Quadrant` en memoria sin persistir (INV-01, INV-02).
-- [ ] **Paso 11: Jerarquía de Tareas (Subtasks)**
+- [x] **Paso 11: Jerarquía de Tareas (Subtasks)**
   - 11.1 Añadir `parentTaskId` a `Task`.
   - 11.2 Implementar validaciones contra ciclos (INV-04) y profundidad máxima (INV-03).
 - [ ] **Paso 12: Propiedades Dinámicas**
