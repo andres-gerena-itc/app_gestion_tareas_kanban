@@ -1,7 +1,7 @@
 import uuid
 from enum import Enum
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, Dict, Any
 
 from .exceptions import InvalidTitleError
 
@@ -21,6 +21,7 @@ class Task:
     parent_task_id: Optional[str] = None
     urgency: bool = False
     importance: bool = False
+    property_values: Dict[str, Any] = field(default_factory=dict) # Flexibilidad Notion-like
 
     def __post_init__(self):
         """Validates domain invariants upon creation."""

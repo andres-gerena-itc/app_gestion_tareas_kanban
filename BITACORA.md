@@ -12,4 +12,5 @@ Este archivo documenta la evolución del proyecto generada con IA. Cada vez que 
 | 2026-05-15 | Paso 5 | Adaptador de persistencia JSON. | `src/infrastructure/json_repository.py` | Aprobado | 3606f9b |
 | 2026-05-15 | Paso 6 | Servidor Flask, inyección de dependencias y endpoints API. | `src/infrastructure/flask_app.py` | Aprobado | af15194 |
 | 2026-05-15 | Paso 7 | Frontend Vanilla JS y configuración de estáticos en Flask. | `src/infrastructure/static/*`, `src/infrastructure/flask_app.py` | Aprobado | 7a3683f |
+| 2026-05-15 | Paso 9,10,11 | Expansión de Dominio: Workspace, Proyectos, Eisenhower y Subtasks. | `src/domain/*` | Pass (Tests Fase 2) | 3fc8ed1 |
 | | | | | | |

@@ -31,7 +31,7 @@
 - [x] **Paso 11: Jerarquía de Tareas (Subtasks)**
   - 11.1 Añadir `parentTaskId` a `Task`.
   - 11.2 Implementar validaciones contra ciclos (INV-04) y profundidad máxima (INV-03).
-- [ ] **Paso 12: Propiedades Dinámicas**
+- [x] **Paso 12: Propiedades Dinámicas**
   - 12.1 Definir `PropertySchema` en `Workspace` (6 tipos nativos).
   - 12.2 Validar que los `PropertyValues` de una `Task` coincidan estrictamente con el esquema (INV-06).
 - [ ] **Paso 13: Proyecciones e Infraestructura**

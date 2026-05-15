@@ -25,3 +25,11 @@ class HierarchyCycleError(DomainError):
 class MaxDepthExceededError(DomainError):
     def __init__(self):
         super().__init__("Profundidad máxima excedida. El árbol de tareas no puede superar los 3 niveles.")
+
+class SchemaNotFoundError(DomainError):
+    def __init__(self, property_name: str):
+        super().__init__(f"No existe un esquema de propiedad llamado '{property_name}' en el Workspace.")
+
+class InvalidPropertyValueError(DomainError):
+    def __init__(self, message: str):
+        super().__init__(message)

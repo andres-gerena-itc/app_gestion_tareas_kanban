@@ -3,7 +3,8 @@ from src.domain.task import Task
 from src.domain.quadrant import Quadrant
 from src.domain.project import Project
 from src.domain.workspace import Workspace
-from src.domain.exceptions import HierarchyCycleError, MaxDepthExceededError
+from src.domain.property import PropertySchema, PropertyType
+from src.domain.exceptions import HierarchyCycleError, MaxDepthExceededError, SchemaNotFoundError, InvalidPropertyValueError
 
 def test_task_quadrant_derivation():
     """
@@ -105,7 +106,8 @@ def test_recursive_subtree_validation():
     # Pero si el t_parent ya estuviera en nivel 2, fallaría
     t_root = Task(title="Raíz")
     proj.add_task(t_root)
-    proj.attach_subtask(t_root.id, t_parent.id) # Raíz -> Padre Principal -> Hijo -> Nieto (4 niveles! Debe fallar al intentar)
+    with pytest.raises(MaxDepthExceededError):
+        proj.attach_subtask(t_root.id, t_parent.id) # Raíz -> Padre Principal -> Hijo -> Nieto (4 niveles! Debe fallar al intentar)
     
     # Para probar eso correctamente, hagámoslo en otro orden:
     t_root2 = Task(title="Raíz 2")
@@ -121,3 +123,47 @@ def test_recursive_subtree_validation():
     
     with pytest.raises(MaxDepthExceededError):
         proj.attach_subtask(t_padre2.id, t_child.id)
+
+def test_dynamic_properties_validation():
+    """
+    Verifica que la asignación de propiedades respete el esquema del Workspace (INV-06).
+    """
+    ws = Workspace(name="WS Custom Fields")
+    proj = Project(workspace_id=ws.id, name="Proyecto Alpha")
+    ws.add_project(proj)
+    
+    t1 = Task(title="Comprar leche")
+    proj.add_task(t1)
+    
+    # Configurar esquemas
+    status_schema = PropertySchema("Estado", PropertyType.STATUS, {"options": ["Backlog", "In Progress", "Done"]})
+    tags_schema = PropertySchema("Etiquetas", PropertyType.MULTI_SELECT, {"options": ["Urgent", "Bug", "Feature"]})
+    date_schema = PropertySchema("Fecha de entrega", PropertyType.DATE)
+    
+    ws.add_property_schema(status_schema)
+    ws.add_property_schema(tags_schema)
+    ws.add_property_schema(date_schema)
+
+    # 1. Asignar propiedad válida (Status)
+    ws.set_task_property(proj.id, t1.id, "Estado", "In Progress")
+    assert t1.property_values["Estado"] == "In Progress"
+
+    # 2. Intentar asignar un estado que no está en las opciones
+    with pytest.raises(InvalidPropertyValueError):
+        ws.set_task_property(proj.id, t1.id, "Estado", "Review")
+
+    # 3. Asignar MultiSelect válido
+    ws.set_task_property(proj.id, t1.id, "Etiquetas", ["Urgent", "Bug"])
+    assert "Urgent" in t1.property_values["Etiquetas"]
+
+    # 4. Intentar asignar MultiSelect inválido
+    with pytest.raises(InvalidPropertyValueError):
+        ws.set_task_property(proj.id, t1.id, "Etiquetas", ["Bug", "No Existe"])
+
+    # 5. Intentar asignar Date inválido (no string)
+    with pytest.raises(InvalidPropertyValueError):
+        ws.set_task_property(proj.id, t1.id, "Fecha de entrega", 2026)
+
+    # 6. Intentar asignar una propiedad a un esquema que no existe
+    with pytest.raises(SchemaNotFoundError):
+        ws.set_task_property(proj.id, t1.id, "Prioridad Fantasma", "Alta")
