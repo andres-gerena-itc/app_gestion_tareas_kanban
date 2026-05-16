@@ -8,6 +8,9 @@ class PropertyType(Enum):
     DATE = "Date"
     FORMULA = "Formula"
     RELATION = "Relation"
+    TEXT = "TEXT"
+    NUMBER = "NUMBER"
+    BOOLEAN = "BOOLEAN"
 
 class PropertySchema:
     """
@@ -49,6 +52,18 @@ class PropertySchema:
             elif self.type == PropertyType.RELATION:
                 if not isinstance(value, str):
                     raise InvalidPropertyValueError("Relation requiere un ID en string.")
+            
+            elif self.type == PropertyType.TEXT:
+                if not isinstance(value, str):
+                    raise InvalidPropertyValueError("Text requiere un string.")
+                    
+            elif self.type == PropertyType.NUMBER:
+                if not isinstance(value, (int, float)):
+                    raise InvalidPropertyValueError("Number requiere un número (int o float).")
+                    
+            elif self.type == PropertyType.BOOLEAN:
+                if not isinstance(value, bool):
+                    raise InvalidPropertyValueError("Boolean requiere un valor booleano.")
                     
         except InvalidPropertyValueError:
             raise

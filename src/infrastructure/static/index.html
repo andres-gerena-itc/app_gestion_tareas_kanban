@@ -10,18 +10,45 @@
 <body>
     <div class="app-container">
         <header>
-            <h1>Tablero Kanban ETITC</h1>
-            <div class="task-input-container">
-                <input type="text" id="new-task-title" placeholder="¿Qué necesitas hacer?">
-                <div class="eisenhower-options">
-                    <label><input type="checkbox" id="check-urgency"> Urgente 🔥</label>
-                    <label><input type="checkbox" id="check-importance"> Importante ⭐</label>
-                </div>
-                <button id="add-task-btn">Agregar Tarea</button>
-            </div>
+            <h1>Multidimensional Kanban</h1>
         </header>
 
-        <main class="board">
+        <div class="control-panel">
+            <!-- Bloque 1: Creación de Tareas -->
+            <div class="panel-section">
+                <h3>Añadir Tarea</h3>
+                <div class="task-input-container">
+                    <input type="text" id="new-task-title" placeholder="Añadir nueva tarea..." />
+                    <div class="eisenhower-options">
+                        <label><input type="checkbox" id="check-urgency"> Urgente 🔥</label>
+                        <label><input type="checkbox" id="check-importance"> Importante ⭐</label>
+                    </div>
+                    <button id="add-task-btn">Añadir Tarea</button>
+                </div>
+            </div>
+            
+            <!-- Bloque 2: Creación de Propiedades Dinámicas -->
+            <div class="panel-section">
+                <h3>Añadir Propiedad</h3>
+                <div class="task-input-container schema-container">
+                    <input type="text" id="new-schema-name" placeholder="Nombre propiedad..." style="width: 150px;" />
+                    <select id="new-schema-type" class="schema-select">
+                        <option value="TEXT">Texto</option>
+                        <option value="NUMBER">Número</option>
+                        <option value="BOOLEAN">Checkbox</option>
+                        <option value="DATE">Fecha</option>
+                    </select>
+                    <button id="add-schema-btn">Crear Propiedad</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="view-tabs">
+            <button class="tab-btn active" data-view="kanban">⊞ Kanban</button>
+            <button class="tab-btn" data-view="table">≡ Tabla</button>
+        </div>
+
+        <main class="board" id="view-kanban">
             <div class="column" id="col-TODO">
                 <div class="column-header">
                     <h2>TODO</h2>
@@ -52,6 +79,56 @@
                 </div>
             </div>
         </main>
+
+        <main class="table-view" id="view-table" style="display: none;">
+            <div class="table-container">
+                <table class="data-table" id="data-table">
+                    <thead>
+                        <tr id="table-head-row">
+                            <!-- Columnas dinámicas generadas en JS -->
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Filas de tareas generadas en JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal para Edición Profunda -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Editar Tarea</h2>
+            <input type="hidden" id="edit-task-id">
+            <input type="text" id="edit-task-title" placeholder="Título de la tarea">
+            <div class="eisenhower-options">
+                <label><input type="checkbox" id="edit-urgency"> Urgente 🔥</label>
+                <label><input type="checkbox" id="edit-importance"> Importante ⭐</label>
+            </div>
+            
+            <!-- Propiedades Dinámicas -->
+            <div id="dynamic-properties-container" class="dynamic-properties"></div>
+            
+            <div class="modal-actions">
+                <button id="save-task-btn">Guardar Cambios</button>
+                <button id="delete-task-btn" class="btn-danger">Eliminar Tarea</button>
+            </div>
+            
+            <hr style="border: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;">
+            
+            <div class="subtasks-section">
+                <h3>Subtareas</h3>
+                <ul id="subtask-list" class="subtask-list">
+                    <!-- Subtareas dinámicas -->
+                </ul>
+                <div class="task-input-container small">
+                    <input type="text" id="new-subtask-title" placeholder="Añadir subtarea...">
+                    <button id="add-subtask-btn" type="button">+</button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- Contenedor para mensajes de error del backend (toast) -->

@@ -31,7 +31,10 @@ class Workspace:
         project = self.get_project(project_id)
         task = project.get_task(task_id)
         
-        task.property_values[property_name] = value
+        if value is None:
+            task.property_values.pop(property_name, None)
+        else:
+            task.property_values[property_name] = value
         
     def add_project(self, project: Project) -> None:
         self.projects.append(project)

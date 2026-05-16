@@ -1,13 +1,13 @@
-from flask import Flask, request, jsonify
+import sys
+import os
 
-# Dominio
+# Añadir el directorio raíz del proyecto al sys.path para permitir ejecución directa
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+from flask import Flask, request, jsonify, send_from_directory
 from src.domain.task import TaskState
 from src.domain.exceptions import DomainError
-
-# Aplicación (Casos de Uso)
-from src.application.use_cases import CreateTaskUseCase, MoveTaskUseCase, GetKanbanViewUseCase
-
-# Infraestructura (Adaptador)
+from src.application.use_cases import CreateTaskUseCase, MoveTaskUseCase, GetKanbanViewUseCase, EditTaskUseCase, DeleteTaskUseCase, AddSubtaskUseCase, AddSchemaUseCase
 from src.infrastructure.json_repository import JSONWorkspaceRepository
 
 # Añadimos parámetros para servir archivos estáticos desde el directorio 'static'
@@ -20,6 +20,10 @@ repository = JSONWorkspaceRepository(file_path="data/database.json")
 create_task_uc = CreateTaskUseCase(repository)
 move_task_uc = MoveTaskUseCase(repository)
 get_kanban_view_uc = GetKanbanViewUseCase(repository)
+edit_task_uc = EditTaskUseCase(repository)
+delete_task_uc = DeleteTaskUseCase(repository)
+add_subtask_uc = AddSubtaskUseCase(repository)
+add_schema_uc = AddSchemaUseCase(repository)
 
 # ==========================================
 # Manejo de Errores de Dominio
@@ -78,6 +82,49 @@ def move_task(task_id):
         raise
         
     return jsonify({"message": "Tarea movida exitosamente"}), 200
+
+@app.route('/api/tasks/<task_id>', methods=['PUT'])
+def update_task(task_id):
+    """Actualiza los datos básicos de una tarea."""
+    data = request.get_json() or {}
+    title = data.get('title')
+    urgency = data.get('urgency', False)
+    importance = data.get('importance', False)
+    property_values = data.get('property_values', {})
+    
+    edit_task_uc.execute(task_id, title, urgency, importance, property_values)
+    return jsonify({"message": "Tarea actualizada exitosamente"}), 200
+
+@app.route('/api/tasks/<task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    """Elimina una tarea y sus descendientes."""
+    delete_task_uc.execute(task_id)
+    return jsonify({"message": "Tarea eliminada exitosamente"}), 200
+
+@app.route('/api/tasks/<task_id>/subtasks', methods=['POST'])
+def add_subtask(task_id):
+    """Crea y anida una subtarea bajo una tarea existente."""
+    data = request.get_json() or {}
+    title = data.get('title')
+    
+    subtask = add_subtask_uc.execute(task_id, title)
+    return jsonify({
+        "id": subtask.id,
+        "title": subtask.title,
+        "state": subtask.state.value,
+        "parent_task_id": subtask.parent_task_id
+    }), 201
+
+@app.route('/api/schemas', methods=['POST'])
+def add_schema():
+    """Crea un nuevo esquema de propiedad para el Workspace."""
+    data = request.get_json() or {}
+    name = data.get('name')
+    prop_type = data.get('type')
+    required = data.get('required', False)
+    
+    add_schema_uc.execute(name, prop_type, required)
+    return jsonify({"message": "Esquema creado exitosamente"}), 201
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

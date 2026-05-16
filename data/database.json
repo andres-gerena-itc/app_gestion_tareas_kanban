@@ -1,7 +1,32 @@
 {
     "id": "c3e2f957-cb89-49dc-b522-050cb9f4086b",
     "name": "Mi Espacio Personal",
-    "property_schemas": [],
+    "property_schemas": [
+        {
+            "name": "Fecha",
+            "type": "TEXT",
+            "config": {
+                "required": false,
+                "options": []
+            }
+        },
+        {
+            "name": "Descripción",
+            "type": "TEXT",
+            "config": {
+                "required": false,
+                "options": []
+            }
+        },
+        {
+            "name": "Responsable",
+            "type": "TEXT",
+            "config": {
+                "required": false,
+                "options": []
+            }
+        }
+    ],
     "projects": [
         {
             "id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
@@ -9,8 +34,8 @@
             "name": "Mi Primer Tablero",
             "tasks": [
                 {
-                    "id": "020d7f63-85d8-40ac-8148-aad4371e2d37",
-                    "title": "Tarea A",
+                    "id": "0693f53c-a275-4fa2-9c2b-e840dac6adce",
+                    "title": "T A",
                     "state": "DONE",
                     "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
                     "parent_task_id": null,
@@ -19,23 +44,35 @@
                     "property_values": {}
                 },
                 {
-                    "id": "b9802b1f-735e-45e6-9252-8712cc0efd05",
-                    "title": "enviar tarea",
+                    "id": "9356cfc7-0391-48db-bfc2-142d028e2fe3",
+                    "title": "T B",
                     "state": "DONE",
                     "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
                     "parent_task_id": null,
-                    "urgency": true,
+                    "urgency": false,
                     "importance": false,
                     "property_values": {}
                 },
                 {
-                    "id": "f2c4b17e-5db2-4c5c-9b98-8d4ba56aa26f",
-                    "title": "ddddd",
+                    "id": "96f4011b-6ebf-40aa-88d2-1c183a10a17b",
+                    "title": "T C",
+                    "state": "DOING",
+                    "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
+                    "parent_task_id": null,
+                    "urgency": true,
+                    "importance": true,
+                    "property_values": {
+                        "Fecha": "01/05/2025"
+                    }
+                },
+                {
+                    "id": "67448847-7cad-4a2f-a231-24708f494534",
+                    "title": "T D",
                     "state": "TODO",
                     "project_id": "7e147855-b91d-45fb-9a87-d13e15dd09c9",
                     "parent_task_id": null,
                     "urgency": false,
-                    "importance": true,
+                    "importance": false,
                     "property_values": {}
                 }
             ]

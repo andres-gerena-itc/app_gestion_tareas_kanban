@@ -44,3 +44,33 @@
   - 14.1 Añadir controles de Urgencia e Importancia en el formulario de creación.
   - 14.2 Enviar el payload completo al backend.
   - 14.3 Renderizar el cuadrante devuelto por la API en las tarjetas de tareas con estilos condicionales.
+
+## FASE 4: Interfaz de Gestión Profunda (CRUD y Jerarquías)
+
+- [x] **Paso 15: Modal Base y CRUD (Editar/Eliminar)**
+  - 15.1 Implementar `update_task` y `remove_task` en `Project` con eliminación en cascada.
+  - 15.2 Crear `EditTaskUseCase` y `DeleteTaskUseCase`.
+  - 15.3 Implementar endpoints `PUT` y `DELETE` en Flask.
+  - 15.4 Construir el Modal de edición en el Frontend y conectarlo a los endpoints.
+- [x] **Paso 16: Panel de Subtareas (Jerarquía)**
+  - 16.1 Crear `AddSubtaskUseCase` para instanciar y anidar tareas.
+  - 16.2 Añadir endpoint `POST /api/tasks/<id>/subtasks`.
+  - 16.3 Modificar `index.html` y `app.js` para renderizar sub-tareas y permitir su creación desde el modal.
+
+## FASE 5: Custom Fields Visuales (Propiedades Dinámicas)
+
+- [x] **Paso 17: Gestión y Renderizado de Esquemas**
+  - 17.1 Exponer `workspace.property_schemas` y `task.property_values` en `KanbanView`.
+  - 17.2 Crear `AddSchemaUseCase` y endpoint `POST /api/schemas`.
+  - 17.3 Actualizar `EditTaskUseCase` para setear propiedades.
+  - 17.4 Construir la interfaz para crear propiedades y renderizarlas dinámicamente en el modal.
+
+## FASE 6: Vistas Alternativas (Tabla y Calendario)
+
+- [ ] **Paso 18: Vista de Tabla (Edición Masiva)**
+  - 18.1 Añadir un selector de Vistas (Kanban | Tabla) en la UI.
+  - 18.2 Construir una estructura HTML tipo `<table class="data-table">` oculta por defecto.
+  - 18.3 Crear la lógica en `app.js` para renderizar `currentBoardTasks` y `currentSchemas` en formato de columnas dinámicas.
+  - 18.4 Permitir ordenar la tabla por columnas (opcional/básico).
+- [ ] **Paso 19: Análisis y Desarrollo de Vista de Calendario**
+  - 19.1 Analizar dependencias y estructura para el calendario (próxima iteración).

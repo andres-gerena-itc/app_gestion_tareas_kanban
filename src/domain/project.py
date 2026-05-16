@@ -119,3 +119,27 @@ class Project:
 
         # 4. Aplicar el anidamiento
         child.parent_task_id = parent_id
+
+    def update_task(self, task_id: str, title: str, urgency: bool, importance: bool) -> None:
+        from .exceptions import InvalidTitleError
+        if not title or not title.strip():
+            raise InvalidTitleError()
+            
+        task = self.get_task(task_id)
+        task.title = title
+        task.urgency = urgency
+        task.importance = importance
+
+    def remove_task(self, task_id: str) -> None:
+        """
+        Elimina una tarea de la lista.
+        Aplica Eliminación en Cascada (Cascade Delete) para subtareas.
+        """
+        task_to_remove = self.get_task(task_id)
+        
+        # Eliminar hijos en cascada
+        children = [t for t in self.tasks if t.parent_task_id == task_id]
+        for child in children:
+            self.remove_task(child.id) # Recursivo
+            
+        self.tasks.remove(task_to_remove)
